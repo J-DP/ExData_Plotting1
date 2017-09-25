@@ -25,20 +25,26 @@ startrow <- grep("1/2/2007", readLines(sourcefilename))[1]-1
 ## search for the last row of the subset 
 endrow <- grep("3/2/2007", readLines(sourcefilename))[1]-1
 
+## read the header seperately
+myheader <-read.table(sourcefilename,header = FALSE, sep = ";",nrows= 1,stringsAsFactors = FALSE)
+
 ## read the subset of data using skip & nrows. Set na.strings = "?"
 subsetofdata <- read.table(sourcefilename,header = FALSE, sep = ";",na.strings = "?",skip=startrow,nrows= (endrow - startrow))
   
 ## Remove NA rows with complete.cases function 
 subsetofdata <- subsetofdata[which(complete.cases(subsetofdata)),]
+
+## add the header as colnames for the dataframe
+colnames(subsetofdata) <- unlist(myheader)
   
 ## create a new column by converting the concatenated V1 & V2 to datetime 
-subsetofdata$mydatetime <-  strptime(paste(subsetofdata$V1,subsetofdata$V2),"%d/%m/%Y %H:%M:%S")  
+subsetofdata$mydatetime <-  strptime(paste(subsetofdata$Date,subsetofdata$Time),"%d/%m/%Y %H:%M:%S")  
 
 ## Plot 1 to png
 png(filename = "plot1.png",width = 480, height = 480, units = "px", pointsize = 12)
   
 ## create a histogram
-hist(subsetofdata$V3,main="Active Global Power",xlab = "Active Global Power (kilowatts)",col="red")  
+hist(subsetofdata$Global_active_power,main="Active Global Power",xlab = "Active Global Power (kilowatts)",col="red")  
   
 ## close the graphical device
 dev.off()
