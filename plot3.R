@@ -46,7 +46,7 @@ lines(subsetofdata$mydatetime,subsetofdata$V8,type="l",lty = 1,col="red")
 ## add line for Sub_metering_3 -  blue
 lines(subsetofdata$mydatetime,subsetofdata$V9,type="l",lty = 1,col="blue")
 ## add legend without border
-legend("topright",lty=1,col=c("black","red","blue"),bty="n",legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
+legend("topright",lty=1,col=c("black","red","blue"),legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
  
 ## close the graphical device
 dev.off()
